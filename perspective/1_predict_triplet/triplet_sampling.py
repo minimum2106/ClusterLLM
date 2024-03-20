@@ -65,26 +65,28 @@ def generate(args):
         sorted_prob = np.argsort(prob)[::-1][:num_closest]
         options.append(sorted_prob) # most probable cluster index
         entropies.append(entropy(prob[sorted_prob])) # entropy with most probable clusters
-    if args.filter_first_prop > 0:
-        sorted_ent = np.argsort(entropies)[::-1][int(len(X) * args.filter_first_prop):int(len(X) * args.large_ent_prop)]
-    else:
-        sorted_ent = np.argsort(entropies)[::-1][:int(len(X) * args.large_ent_prop)]
-    if args.shuffle_inds:
-        np.random.shuffle(sorted_ent)
-    
+
+    # Find indices of top and bottom percentiles
+    threshold_indices = int(len(X)*args.large_ent_prop), int(len(X)*args.small_ent_prop)
+    sorted_ent = np.argsort(entropies)[::-1]
+    high_indices = sorted_ent[:threshold_indices[0]]
+    low_indices = sorted_ent[-threshold_indices[1]:]
+    # Combine the indices of the desired triplets
+    sampling_indices = np.concatenate([high_indices, low_indices], axis=0)
+
     triplets = []
     while len(triplets) < args.max_query:
-        for idx in sorted_ent:
-            cur_options = options[idx].tolist()
-            # sample 2 from most probable clusters
-            cluster1, cluster2 = random.sample(cur_options, 2)
-            choice1 = random.choice(class_member_inds[cluster1])
-            choice2 = random.choice(class_member_inds[cluster2])
-            if (idx, choice1, choice2) not in triplets \
-                and choice1 != idx and choice2 != idx:
-                triplets.append((idx, choice1, choice2))
-                if len(triplets) >= args.max_query:
-                    break
+        idx = random.choice(sampling_indices)
+        cur_options = options[idx].tolist()
+        # sample 2 from most probable clusters
+        cluster1, cluster2 = random.sample(cur_options, 2)
+        choice1 = random.choice(class_member_inds[cluster1])
+        choice2 = random.choice(class_member_inds[cluster2])
+        if (idx, choice1, choice2) not in triplets \
+            and choice1 != idx and choice2 != idx:
+            triplets.append((idx, choice1, choice2))
+            if len(triplets) >= args.max_query:
+                break
     
     # !warning: some of the codes below might be unnecessary
     result = []
@@ -146,6 +148,7 @@ if __name__ == "__main__":
     parser.add_argument("--scale", type=str, default="small")
     parser.add_argument("--max_query", type=int, default=256)
     parser.add_argument("--large_ent_prop", type=float, default=0.20)
+    parser.add_argument("--small_ent_prop", type=float, default=0.02)
     parser.add_argument("--filter_first_prop", type=float, default=0.)
     parser.add_argument("--close_cluster_prop", type=float, default=0.02)
     parser.add_argument("--max_distance", type=float, default=67)
