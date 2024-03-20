@@ -53,6 +53,14 @@ def generate(args):
         class_member_inds[i] = np.where(class_member_mask)[0]
     cluster_centers = np.stack(cluster_centers)
 
+    # Farthest clusters
+    num_farthest = max(2, round(n_clusters * (1 - args.close_cluster_prop)))
+    distances = []
+    for idx in range(len(X)):
+        dist = ((X[idx] - cluster_centers) ** 2).sum(-1)
+        distances.append(dist.min())
+    sorted_dist = np.argsort(distances)[::-1][:num_farthest]
+
     # closest clusters
     num_closest = max(2, round(n_clusters * args.close_cluster_prop))
     options = []
@@ -69,22 +77,42 @@ def generate(args):
         sorted_ent = np.argsort(entropies)[::-1][int(len(X) * args.filter_first_prop):int(len(X) * args.large_ent_prop)]
     else:
         sorted_ent = np.argsort(entropies)[::-1][:int(len(X) * args.large_ent_prop)]
+    
+    # Initialize empty triplets list
+    triplets = []
     if args.shuffle_inds:
         np.random.shuffle(sorted_ent)
-    
-    triplets = []
+
+    # Generate triplets up to the maximum query limit
     while len(triplets) < args.max_query:
-        for idx in sorted_ent:
-            cur_options = options[idx].tolist()
-            # sample 2 from most probable clusters
-            cluster1, cluster2 = random.sample(cur_options, 2)
-            choice1 = random.choice(class_member_inds[cluster1])
-            choice2 = random.choice(class_member_inds[cluster2])
-            if (idx, choice1, choice2) not in triplets \
-                and choice1 != idx and choice2 != idx:
-                triplets.append((idx, choice1, choice2))
-                if len(triplets) >= args.max_query:
-                    break
+
+        # Add triplets from the closest clusters
+        if args.close_cluster_prop > 0:
+            close_sorted_ent = sorted_ent[:int(len(sorted_ent) * args.close_cluster_prop)]
+            near_num = min(len(close_sorted_ent), args.max_query - len(triplets))
+            for _ in range(near_num):
+                idx = np.random.choice(close_sorted_ent)
+                cur_options = options[idx].tolist()
+                cluster1, cluster2 = random.sample(cur_options, 2)
+                choice1 = random.choice(class_member_inds[cluster1])
+                choice2 = random.choice(class_member_inds[cluster2])
+                if (idx, choice1, choice2) not in triplets \
+                        and choice1 != idx and choice2 != idx:
+                    triplets.append((idx, choice1, choice2))
+
+        # Add triplets from the farthest clusters
+        if args.far_cluster_prop > 0:
+            far_sorted_ent = np.intersect1d(sorted_ent, sorted_dist)
+            far_num = min(len(far_sorted_ent), args.max_query - len(triplets))
+            far_sorted_ent = np.random.choice(far_sorted_ent, size=far_num, replace=False)
+            for idx in far_sorted_ent:
+                cur_options = options[idx].tolist()
+                cluster1, cluster2 = random.sample(cur_options, 2)
+                choice1 = random.choice(class_member_inds[cluster1])
+                choice2 = random.choice(class_member_inds[cluster2])
+                if (idx, choice1, choice2) not in triplets \
+                        and choice1 != idx and choice2 != idx:
+                    triplets.append((idx, choice1, choice2))  
     
     # !warning: some of the codes below might be unnecessary
     result = []
@@ -148,6 +176,7 @@ if __name__ == "__main__":
     parser.add_argument("--large_ent_prop", type=float, default=0.20)
     parser.add_argument("--filter_first_prop", type=float, default=0.)
     parser.add_argument("--close_cluster_prop", type=float, default=0.02)
+    parser.add_argument("--far_cluster_prop", type=float, default=0.10)
     parser.add_argument("--max_distance", type=float, default=67)
     parser.add_argument("--shuffle_inds", action="store_true")
     parser.add_argument("--out_dir", default="links", type=str)
