@@ -5,7 +5,7 @@ do
     OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 python predict_pairs.py \
         --dataset $dataset \
         --data_path $link_path \
-        --model_name gpt-4-0314 \
+        --model_name mistral_7b \
         --openai_org "OPENAI_ORG" \
         --prompt_file prompts_pair_exps_pair_v3.json \
         --temperature 0

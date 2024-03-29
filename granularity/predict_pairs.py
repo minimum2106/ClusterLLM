@@ -2,9 +2,9 @@
 import os
 import json
 import argparse
-import openai
+# import openai
 from tqdm import tqdm
-from tools import delayed_completion
+from tools import delayed_completion, get_model
 
 def prepare_data(prompt, datum):
     postfix = "\n\nPlease respond with 'Yes' or 'No' without explanation."
@@ -12,7 +12,8 @@ def prepare_data(prompt, datum):
     return prompt + input_txt + postfix
 
 def post_process(completion):
-    content = completion['choices'][0]['message']['content'].strip()
+    # content = completion['choices'][0]['message']['content'].strip()
+    content = completion.split('.')[0]
     result = []
     if 'Yes' in content and 'No' not in content:
         result.append('Yes')
@@ -21,8 +22,10 @@ def post_process(completion):
     return content, result
 
 def predict(args):
-    openai.organization = args.openai_org
-    openai.api_key = os.getenv("OPENAI_API_KEY")
+    # openai.organization = args.openai_org
+    # openai.api_key = os.getenv("OPENAI_API_KEY")
+
+    model, tokenizer = get_model(args.model_name)
 
     prompt_file_name = args.prompt_file.split("/")[-1].split(".")[0]
 
@@ -76,7 +79,13 @@ def predict(args):
             {"role": "user", "content": datum['prepared']}
         ]
         
-        completion, error = delayed_completion(delay_in_seconds=args.delay, max_trials=args.max_trials, model=args.model_name, messages=messages, max_tokens=10, temperature=args.temperature)
+        # completion, error = delayed_completion(delay_in_seconds=args.delay, max_trials=args.max_trials, model=args.model_name, messages=messages, max_tokens=10, temperature=args.temperature)
+        completion, error = delayed_completion(
+            model, tokenizer, messages, 
+            delay_in_seconds=args.delay, max_trials=args.max_trials, 
+            max_new_tokens=10, temperature=args.temperature
+        )
+        
         if completion is None:
             print(f"Saving data after {idx + 1} inference.")
             with open(pred_path, 'w') as f:

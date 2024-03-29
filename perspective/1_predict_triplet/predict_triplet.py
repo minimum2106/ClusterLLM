@@ -3,16 +3,19 @@ import argparse
 import json
 import openai
 from tqdm import tqdm
-from tools import delayed_completion, prepare_data, post_process
+from tools import delayed_completion, prepare_data, post_process, get_model
 
 
 def predict(args):
-    openai.organization = args.openai_org
-    openai.api_key = os.getenv("OPENAI_API_KEY")
+    # openai.organization = args.openai_org
+    # openai.api_key = os.getenv("OPENAI_API_KEY")
 
     pred_path = args.data_path.split("/")[-1].replace(".json", f"-{args.model_name}{'-temp' + str(round(args.temperature, 1)) if args.temperature > 0 else ''}-pred.json")
     pred_path = os.path.join("predicted_triplet_results", pred_path)
     print("Save in: ", pred_path)
+
+    model, tokenizer = get_model(args.model_name)
+    
     if os.path.exists(pred_path):
         with open(pred_path, 'r') as f:
             data = json.load(f)
@@ -37,7 +40,13 @@ def predict(args):
         messages = [
             {"role": "user", "content": datum['prepared']}
         ]
-        completion, error = delayed_completion(delay_in_seconds=args.delay, max_trials=args.max_trials, model=args.model_name, messages=messages, max_tokens=10, temperature=args.temperature)
+    
+        completion, error = delayed_completion(
+            model, tokenizer, messages, 
+            delay_in_seconds=args.delay, max_trials=args.max_trials, 
+            max_new_tokens=10, temperature=args.temperature
+        )
+        
         if completion is None:
             print(f"Saving data after {idx + 1} inference.")
             with open(pred_path, 'w') as f:

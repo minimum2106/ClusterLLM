@@ -431,6 +431,7 @@ def main():
                 "the `--output_dir` or add `--overwrite_output_dir` to train from scratch."
             )
 
+
     # Set seed before initializing model.
     tokenizer = AutoTokenizer.from_pretrained(
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
@@ -439,6 +440,7 @@ def main():
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
     )
+
 
     set_seed(training_args.seed)
     # with open(os.path.join(model_args.cache_dir, data_args.train_file), 'r') as f:
@@ -573,9 +575,10 @@ def main():
         print(f"Loading from {model_args.init_checkpoint} ...")
         state_dict = torch.load(os.path.join(model_args.init_checkpoint, 'pytorch_model.bin'))
         model.load_state_dict(state_dict)
+
     train_result = trainer.train(resume_from_checkpoint=checkpoint)
     trainer.save_model()  # Saves the tokenizer too for easy upload
-
+    
     metrics = train_result.metrics
     max_train_samples = (
         data_args.max_train_samples if data_args.max_train_samples is not None else len(train_dataset)

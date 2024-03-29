@@ -7,7 +7,7 @@ do
         --dataset $dataset \
         --data_path $link_path \
         --openai_org "OPENAI_ORG" \
-        --model_name gpt-3.5-turbo-0301 \
+        --model_name mistral_7b \
         --temperature 0
 done
 

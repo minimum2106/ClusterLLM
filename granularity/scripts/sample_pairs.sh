@@ -7,7 +7,7 @@ do
     do
         python sample_pairs.py \
             --dataset $dataset \
-            --data_path ../datasets/${dataset}/${scale}.jsonl \
+            --data_path ../../../datasets/${dataset}/${scale}.jsonl \
             --feat_path ../perspective/2_finetune/checkpoints/finetune-pretrain-1024-gpt-noprior/instructor-large-${dataset}-d=${d}-epoch=15/checkpoint-3840/${scale}_embeds.hdf5 \
             --scale $scale \
             --embed_method $embed_method \
