@@ -95,8 +95,32 @@ Details instructions see bash script.
 }
 ```
 
-## THE WORK OF THIS BRANCH
+# THE WORK OF THIS BRANCH
 
+## Steps to run the experiment from this branch
+
+### 1. Sample pairs
+```bash
+cd granularity
+bash scripts/sample_pairs.sh
+```
+Sampled pairs will be saved in `sampled_pair_results`.
+
+### 2. Predict pairs
+```bash
+cd granularity
+bash scripts/predict_pairs.sh
+```
+Predicted pairs will be in `granularity/predicted_pair_results`. Also specify `prompt_file` to sampled the prompt.
+
+### 3. Convert pairs 
+
+### 4. Finetune
+```bash
+cd perspective/2_finetune
+bash scripts/finetune.sh
+```
+Finetuned model will be in `perspective/2_finetune/checkpoints`. Details instructions see bash script.
 
 ## Thanks
 Some of the code was adapted from:
