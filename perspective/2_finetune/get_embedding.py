@@ -48,7 +48,6 @@ if os.path.exists(args.result_file) and not args.overwrite:
     measures = evaluator.eval_only(embeds)
 
 else:
-
     model = INSTRUCTOR(args.model_name,cache_folder=args.cache_dir)
     if args.checkpoint is not None:
         print(f"Loading from {args.checkpoint} ...")

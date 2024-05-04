@@ -7,9 +7,6 @@ from tools import delayed_completion, prepare_data, post_process, get_model
 
 
 def predict(args):
-    # openai.organization = args.openai_org
-    # openai.api_key = os.getenv("OPENAI_API_KEY")
-
     pred_path = args.data_path.split("/")[-1].replace(".json", f"-{args.model_name}{'-temp' + str(round(args.temperature, 1)) if args.temperature > 0 else ''}-pred.json")
     pred_path = os.path.join("predicted_triplet_results", pred_path)
     print("Save in: ", pred_path)
@@ -63,9 +60,6 @@ def predict(args):
             print(f"Saving data after {idx + 1} inference.")
             with open(pred_path, "w") as f:
                 json.dump(data, f)
-        
-        # if idx > 10:
-        #     break
     
     with open(pred_path, "w") as f:
         json.dump(data, f)
