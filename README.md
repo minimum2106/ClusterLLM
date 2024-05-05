@@ -83,6 +83,32 @@ bash scripts/predict_num_clusters.sh
 ```
 Details instructions see bash script.
 
+##  OUR MODIFICATION 
+
+I have reduced the run for the whole pipeline into 2 bash scrips.
+
+First, run `create_output_folders.sh` once to create a list of emptied folder to store ouput of each step in the pipeline:
+```bash
+bash create_output_folders.sh
+```
+
+Then run the pipeline, 
+```bash
+bash run_file.sh -i 3 -e 4
+```
+For the first run, please run the pipeline with a small number of epoch and iteration to test the pipline.
+The default iteration (-i) is 6 and epoch (-e) is 30.
+
+
+**IMPORTANT**
+
+Please run these 2 files in ClusterLLM or else the path's references in the bash files gonna be incorrect. 
+For example:
+```bash
+cd ClusterLLM
+bash run_file.sh
+```
+
 ## Citation
 ```
 @misc{zhang2023clusterllm,
