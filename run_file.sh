@@ -2,7 +2,32 @@
 # This pipeline is to running original work of author 6 times and record the result of improved embedding model 
 
 #!/bin/bash
-num_iteration=$1
+num_iteration=6
+epoch=30
+
+OPTSTRING=":i:e:"
+
+while getopts ${OPTSTRING} opt; do
+  case ${opt} in
+    i)
+        num_iteration=${OPTARG}
+        echo helo
+        ;;
+
+    e)
+        epoch=${OPTARG}
+        ;;
+    
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
 
 for i in $(seq 0 $num_iteration)
 do 
@@ -21,7 +46,7 @@ do
     bash perspective/2_finetune/scripts/convert_triplet.sh
 
     # Step 5: 
-    bash perspective/2_finetune/scripts/finetune.sh $i
+    bash perspective/2_finetune/scripts/finetune.sh -i $i -e $epoch
 done
 
 

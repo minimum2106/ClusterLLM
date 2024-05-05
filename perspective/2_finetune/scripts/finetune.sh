@@ -1,8 +1,30 @@
-epoch=30
 scale=small
 d="67.0"
 seed=100
 dataset=banking77
+
+OPTSTRING=":i:e:"
+while getopts ${OPTSTRING} opt; do
+  case ${opt} in
+    i)
+        num_iteration=${OPTARG}
+        echo helo
+        ;;
+
+    e)
+        epoch=${OPTARG}
+        ;;
+    
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
 
 # ===== mistral-7b =====
 CUDA_VISIBLE_DEVICES=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 python perspective/2_finetune/finetune.py \
