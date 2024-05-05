@@ -6,16 +6,16 @@ embed=intructor
 d="67.0"
 epoch=30
 
-feat_path=../../../../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 \
-python ../triplet_sampling.py \
-    --data_path ../../../../../datasets/${dataset}/${scale}.jsonl \
+feat_path=../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 \
+python perspective/1_predict_triplet/triplet_sampling.py \
+    --data_path ../../datasets/${dataset}/${scale}.jsonl \
     --feat_path $feat_path \
     --dataset $dataset \
     --embed_method $embed \
     --max_query $max_query \
     --filter_first_prop 0.0 \
     --large_ent_prop 0.2 \
-    --out_dir sampled_triplet_results \
+    --out_dir perspective/1_predict_triplet/sampled_triplet_results \
     --max_distance 67 \
     --scale $scale \
     --shuffle_inds \
