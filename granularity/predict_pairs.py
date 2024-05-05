@@ -29,7 +29,7 @@ def predict(args):
 
     prompt_file_name = args.prompt_file.split("/")[-1].split(".")[0]
 
-    pred_path = args.data_path.split("/")[-1].replace(".json", f"-{args.model_name}-{prompt_file_name}.json")
+    pred_path = args.data_path.split("/")[-1].replace(".json", f"-{args.model_name}-{prompt_file_name}-pred.json")
     pred_path = os.path.join("predicted_pair_results", pred_path)
     print("Save in: ", pred_path)
     num_clusters = None
