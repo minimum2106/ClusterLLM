@@ -86,10 +86,14 @@ def generate(args):
     while len(triplets) < args.max_query:
         for idx in sorted_ent:
             cur_options = options[idx].tolist()
-            # sample 2 from most probable clusters
+
+            # sample 2 from most probable clusters (in here they randomly choose 2 from the closest clusters)
             cluster1, cluster2 = random.sample(cur_options, 2)
-            choice1 = random.choice(class_member_inds[cluster1])
-            choice2 = random.choice(class_member_inds[cluster2])
+
+            # CHANGE TO CHOOSE THE CENTROID OF 2 PROBABLE CLASSES AS 2 CHOICES
+            choice1 = cluster_centers[cluster1]
+            choice2 = cluster_centers[cluster2]
+
             if (
                 (idx, choice1, choice2) not in triplets
                 and choice1 != idx
