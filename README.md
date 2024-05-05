@@ -83,8 +83,7 @@ bash scripts/predict_num_clusters.sh
 ```
 Details instructions see bash script.
 
-
-# ============================================== OUR MODIFICATION ==============================================
+##  OUR MODIFICATION 
 
 I have reduced the run for the whole pipeline into 2 bash scrips.
 
@@ -101,7 +100,7 @@ For the first run, please run the pipeline with a small number of epoch and iter
 The default iteration (-i) is 6 and epoch (-e) is 30.
 
 
-*IMPORTANT* 
+**IMPORTANT**
 
 Please run these 2 files in ClusterLLM or else the path's references in the bash files gonna be incorrect. 
 For example:
