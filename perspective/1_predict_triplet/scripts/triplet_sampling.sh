@@ -6,16 +6,9 @@ embed=intructor
 d="67.0"
 epoch=30
 
-if [[ $1 -eq 0]]
-then
-    # get the original embeddings
-    feat_path=../../../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 \
-else 
-    feat_path=../../2_finetune/checkpoints/finetune-pretrain-1024-gpt-noprior/instructor-large-${dataset}-d=${d}-epoch=${epoch}-iter=(($1-1))/checkpoint-3840/${scale}_embeds.hdf5 \
-fi
-
-python triplet_sampling.py \
-    --data_path ../../../../datasets/${dataset}/${scale}.jsonl \
+feat_path=../../../../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 \
+python ../triplet_sampling.py \
+    --data_path ../../../../../datasets/${dataset}/${scale}.jsonl \
     --feat_path $feat_path \
     --dataset $dataset \
     --embed_method $embed \
