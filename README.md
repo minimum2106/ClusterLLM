@@ -83,6 +83,32 @@ bash scripts/predict_num_clusters.sh
 ```
 Details instructions see bash script.
 
+##  OUR MODIFICATION 
+
+I have reduced the run for the whole pipeline into 2 bash scrips.
+
+First, run `create_output_folders.sh` once to create a list of emptied folder to store ouput of each step in the pipeline:
+```bash
+bash create_output_folders.sh
+```
+
+Then run the pipeline, 
+```bash
+bash run_file.sh -i 3 -e 4
+```
+For the first run, please run the pipeline with a small number of epoch and iteration to test the pipline.
+The default iteration (-i) is 6 and epoch (-e) is 30.
+
+
+**IMPORTANT**
+
+Please run these 2 files in ClusterLLM or else the path's references in the bash files gonna be incorrect. 
+For example:
+```bash
+cd ClusterLLM
+bash run_file.sh
+```
+
 ## Citation
 ```
 @misc{zhang2023clusterllm,
@@ -94,33 +120,6 @@ Details instructions see bash script.
       primaryClass={cs.CL}
 }
 ```
-
-# THE WORK OF THIS BRANCH
-
-## Steps to run the experiment from this branch
-
-### 1. Sample pairs
-```bash
-cd granularity
-bash scripts/sample_pairs.sh
-```
-Sampled pairs will be saved in `sampled_pair_results`.
-
-### 2. Predict pairs
-```bash
-cd granularity
-bash scripts/predict_pairs.sh
-```
-Predicted pairs will be in `granularity/predicted_pair_results`. Also specify `prompt_file` to sampled the prompt.
-
-### 3. Convert pairs 
-
-### 4. Finetune
-```bash
-cd perspective/2_finetune
-bash scripts/finetune.sh
-```
-Finetuned model will be in `perspective/2_finetune/checkpoints`. Details instructions see bash script.
 
 ## Thanks
 Some of the code was adapted from:

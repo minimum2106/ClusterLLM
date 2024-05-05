@@ -1,0 +1,4 @@
+mkdir granularity/sampled_pair_results
+mkdir granularity/converted_pair_results
+mkdir granularity/predicted_pair_results
+mkdir perspective/2_finetune/checkpoints
