@@ -46,7 +46,7 @@ do
     bash perspective/2_finetune/scripts/convert_triplet.sh
 
     # Step 5: 
-    bash perspective/2_finetune/scripts/finetune.sh -i $i -e $epoch
+    bash perspective/2_finetune/scripts/finetune.sh -i $num_iteration -e $epoch
 done
 
 
