@@ -68,7 +68,7 @@ else:
     
 
 if measures is not None and args.measure:
-    with open(args.result_file.replace(".hdf5", "_measures.json"), 'w') as f:
+    with open(args.result_file.replace(".hdf5", "_stage2_measures.json"), 'w') as f:
         json.dump(measures, f)
 
 print(measures)
