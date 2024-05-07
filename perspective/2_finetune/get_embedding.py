@@ -21,6 +21,8 @@ parser.add_argument('--prompt', default=None,type=str)
 parser.add_argument('--batch_size', default=-1,type=int)
 parser.add_argument("--checkpoint", default=None, type=str)
 parser.add_argument("--scale", default="small", type=str)
+parser.add_argument("--method", default="random", type=str)
+
 parser.add_argument("--measure", action="store_true",
                     help="if measure clustering performance")
 parser.add_argument("--overwrite", action="store_true",
@@ -65,10 +67,10 @@ else:
     with h5py.File(args.result_file, 'w') as f:
         dset = f.create_dataset("embeds", data=embeds)
     # lset = f.create_dataset("labels", data=labels)
-    
+
 
 if measures is not None and args.measure:
-    with open(args.result_file.replace(".hdf5", "_stage2_measures.json"), 'w') as f:
+    with open(args.result_file.replace(".hdf5", f"_{args.method}_measures.json"), 'w') as f:
         json.dump(measures, f)
 
 print(measures)
