@@ -11,7 +11,6 @@ while getopts ${OPTSTRING} opt; do
   case ${opt} in
     i)
         num_iteration=${OPTARG}
-        echo helo
         ;;
 
     e)
