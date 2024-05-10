@@ -13,6 +13,7 @@ then
         --task_name $dataset \
         --data_path ../../datasets/${dataset}/${scale}.jsonl \
         --result_file ../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 \
+        --iter $1 \
         --measure
 else
     checkpoint_path=perspective/2_finetune/checkpoints/finetune-pretrain-1024-gpt-noprior/instructor-large-${dataset}-d=${d}-epoch=${epoch}-iter=(($1-1)) \
@@ -23,6 +24,7 @@ else
         --data_path ../../datasets/${dataset}/${scale}.jsonl \
         --result_file ../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 \
         --measure \
+        --iter $1 \
         --checkpoint $checkpoint_path \
         --overwrite
 fi
