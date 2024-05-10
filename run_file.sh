@@ -28,7 +28,7 @@ while getopts ${OPTSTRING} opt; do
   esac
 done
 
-for method in random centroid stage2
+for method in all_random all_centroid all_stage2
 do 
     if [[$method -eq stage2]]
     then 
