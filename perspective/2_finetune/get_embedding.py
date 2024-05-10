@@ -19,6 +19,7 @@ parser.add_argument('--cache_dir', default=None,type=str)
 parser.add_argument('--result_file', default=None,type=str)
 parser.add_argument('--prompt', default=None,type=str)
 parser.add_argument('--batch_size', default=-1,type=int)
+parser.add_argument('--iter', default=1,type=int)
 parser.add_argument("--checkpoint", default=None, type=str)
 parser.add_argument("--scale", default="small", type=str)
 parser.add_argument("--measure", action="store_true",
@@ -68,7 +69,7 @@ else:
     
 
 if measures is not None and args.measure:
-    with open(args.result_file.replace(".hdf5", "_stage2_measures.json"), 'w') as f:
+    with open(args.result_file.replace(".hdf5", "_stage2_{args.iter}_measures.json"), 'w') as f:
         json.dump(measures, f)
 
 print(measures)
