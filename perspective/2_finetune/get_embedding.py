@@ -20,6 +20,7 @@ parser.add_argument('--result_file', default=None,type=str)
 parser.add_argument('--prompt', default=None,type=str)
 parser.add_argument('--batch_size', default=-1,type=int)
 parser.add_argument('--iter', default=1,type=int)
+parser.add_argument('--epoch', default=1,type=int)
 parser.add_argument("--checkpoint", default=None, type=str)
 parser.add_argument("--scale", default="small", type=str)
 parser.add_argument("--method", default="random", type=str)
@@ -71,7 +72,7 @@ else:
 
 
 if measures is not None and args.measure:
-    with open(args.result_file.replace(".hdf5", f"_{args.method}_{args.iter}_measures.json"), 'w') as f:
+    with open(args.result_file.replace(".hdf5", f"_method={args.method}_epoch={args.epoch}_iter{args.iter}_measures.json"), 'w') as f:
         json.dump(measures, f)
 
 print(measures)
