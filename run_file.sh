@@ -34,7 +34,7 @@ do
     # Step 1: Get embeddings from original embedding model
     # if i == 0 --> run with original embedding model 
     # if i != 0 --> run with finetuned embedding model of iteration i-1    
-    bash perspective/2_finetune/scripts/get_embedding.sh $i
+    bash perspective/2_finetune/scripts/get_embedding.sh $i $epoch
 
     # Step 2: Sample triplets
     bash perspective/1_predict_triplet/scripts/triplet_sampling.sh $i
