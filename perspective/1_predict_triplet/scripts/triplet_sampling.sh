@@ -1,10 +1,11 @@
 # ===== instructor-large =====
 scale=small
 max_query=1024
-dataset=banking77
-embed=intructor
-d="67.0"
-epoch=30
+embed=instructor
+
+iter=$1
+method=$2
+dataset=$3
 
 feat_path=../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 \
 python perspective/1_predict_triplet/triplet_sampling.py \
@@ -20,7 +21,8 @@ python perspective/1_predict_triplet/triplet_sampling.py \
     --scale $scale \
     --shuffle_inds \
     --seed 100 \
-    --iter $1
+    --iter $1 \
+    --method $method \
 
 
 # for dataset in banking77 
