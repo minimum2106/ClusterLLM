@@ -164,10 +164,10 @@ class ClusteringEvaluator(object):
             for seed in [100, 13, 21, 36, 42]:
                 if self.args.scale == "small":
                     logger.info(f"Fitting K-Means model (seed: {seed})...")
-                    preds = KMeans(n_clusters=n_clusters, random_state=seed).fit_predict(corpus_embeddings)
+                    preds = KMeans(n_clusters=n_clusters, random_state=seed, n_init='auto').fit_predict(corpus_embeddings)
                 elif self.args.scale == "large":
                     logger.info(f"Fitting MiniBatch K-Means model (seed: {seed})...")
-                    preds = MiniBatchKMeans(n_clusters=n_clusters, random_state=seed).fit_predict(corpus_embeddings)
+                    preds = MiniBatchKMeans(n_clusters=n_clusters, random_state=seed, n_init='auto').fit_predict(corpus_embeddings)
                 preds = np.asarray(preds)
                 measures = clustering_score(label_ids, preds)
                 for k in measures:
@@ -196,10 +196,10 @@ class ClusteringEvaluator(object):
             for seed in [100, 13, 21, 36, 42]:
                 if self.args.scale == "small":
                     logger.info(f"Fitting K-Means model (seed: {seed})...")
-                    preds = KMeans(n_clusters=n_clusters, random_state=seed).fit_predict(corpus_embeddings)
+                    preds = KMeans(n_clusters=n_clusters, random_state=seed, n_init='auto').fit_predict(corpus_embeddings)
                 elif self.args.scale == "large":
                     logger.info(f"Fitting MiniBatch K-Means model (seed: {seed})...")
-                    preds = MiniBatchKMeans(n_clusters=n_clusters, random_state=seed).fit_predict(corpus_embeddings)
+                    preds = MiniBatchKMeans(n_clusters=n_clusters, random_state=seed, n_init='auto').fit_predict(corpus_embeddings)
                 preds = np.asarray(preds)
                 measures = clustering_score(label_ids, preds)
                 for k in measures:

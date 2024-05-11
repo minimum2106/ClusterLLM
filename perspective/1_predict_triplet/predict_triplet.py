@@ -8,10 +8,11 @@ from tools import delayed_completion, prepare_data, post_process, get_model
 
 def predict(args):
     pred_path = args.data_path.split("/")[-1].replace(".json", f"-{args.model_name}{'-temp' + str(round(args.temperature, 1)) if args.temperature > 0 else ''}-pred.json")
-    pred_path = os.path.join("predicted_triplet_results", pred_path)
+    pred_path = os.path.join("perspective/1_predict_triplet/predicted_triplet_results", pred_path)
     print("Save in: ", pred_path)
 
     model, tokenizer = get_model(args.model_name)
+  
     
     if os.path.exists(pred_path):
         with open(pred_path, 'r') as f:
@@ -19,8 +20,9 @@ def predict(args):
     else:
         with open(args.data_path, 'r') as f:
             data = json.load(f)
+
     
-    with open("prompts.json", 'r') as f:
+    with open(os.getcwd() + "/perspective/1_predict_triplet/prompts.json", 'r') as f:
         prompts = json.load(f)
         task_prompt = prompts[args.dataset]
     

@@ -21,7 +21,7 @@ with open(args.data_path, "r") as f:
 
 # the same prompt because it is used for clustering on the same dataset
 if not args.e5:
-    with open("prompts.json", "r") as f:
+    with open("granularity/prompts.json", "r") as f:
         prompt = json.load(f)[args.dataset]
 else:
     prompt = "query: "

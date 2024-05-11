@@ -291,6 +291,15 @@ class DataTrainingArguments:
             )
         },
     )
+
+    # save_safetensors: bool = field(
+    #     default=False,
+    #     metadata={
+    #         "help": (
+    #             "Whether to safe tensor or not"
+    #         )
+    #     },
+    # )
     val_max_target_length: Optional[int] = field(
         default=None,
         metadata={
@@ -395,6 +404,11 @@ def main():
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
+    
+    
+    
+    
+
     data_args.output_dir = training_args.output_dir
     real_name_or_path = model_args.model_name_or_path
     data_args.model_name_or_path = model_args.model_name_or_path
@@ -441,9 +455,9 @@ def main():
         use_auth_token=True if model_args.use_auth_token else None,
     )
 
-
     set_seed(training_args.seed)
     # with open(os.path.join(model_args.cache_dir, data_args.train_file), 'r') as f:
+    
     with open(data_args.train_file, 'r') as f:
         train_examples_raw = json.load(f)
     # old_train_examples_raw = train_examples_raw
@@ -556,6 +570,8 @@ def main():
         pad_to_multiple_of=8 if training_args.fp16 else None,
     )
 
+    # turn save_safetensors to False to avoid shared memory problem
+    training_args.save_safetensors = False
     trainer = InstructorTrainer(
         model=model,
         args=training_args,

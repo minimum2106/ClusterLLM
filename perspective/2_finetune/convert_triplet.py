@@ -13,6 +13,7 @@ parser.add_argument("--e5", action="store_true",
                     help="E5 does not allow instructions.")
 args = parser.parse_args()
 
+
 with open(args.pred_path, 'r') as f:
     pred_data = json.load(f)
 
@@ -20,8 +21,9 @@ with open(args.data_path, 'r') as f:
     inp_data = [json.loads(l) for l in f.readlines()]
 
 # the same prompt because it is used for clustering on the same dataset
+
 if not args.e5:
-    with open("prompts.json", 'r') as f:
+    with open("perspective/2_finetune/prompts.json", 'r') as f:
         prompt = json.load(f)[args.dataset]
 else:
     prompt = 'query: '

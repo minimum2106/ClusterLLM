@@ -1,4 +1,5 @@
 scale=small
+dataset=$2
 for dataset in banking77
 do
     for max_query in 1024

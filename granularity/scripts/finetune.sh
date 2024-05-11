@@ -1,34 +1,12 @@
 scale=small
 d="67.0"
 seed=100
-dataset=banking77
-
-
-OPTSTRING=":i:e:"
-
-while getopts ${OPTSTRING} opt; do
-  case ${opt} in
-    i)
-        num_iteration=${OPTARG}
-        ;;
-
-    e)
-        epoch=${OPTARG}
-        ;;
-    
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
-      ;;
-    :)
-      echo "Option -$OPTARG requires an argument." >&2
-      exit 1
-      ;;
-  esac
-done
+num_iteration=$1
+epoch=$2
+dataset=$3
 
 # ===== mistral-7b =====
-train_file=granularity/predicted_pair_results/banking77_embed=finetuned_s=small_k=1_multigran2-200_seed=100-mistral_7b-prompts_pair_exps_pair_v3-train.json
+train_file=granularity/converted_pair_results/banking77_embed=finetuned_s=small_k=1_multigran2-200_seed=100-mistral_7b-prompts_pair_exps_pair_v3-train.json
 
 CUDA_VISIBLE_DEVICES=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 python granularity/finetune.py \
     --model_name_or_path hkunlp/instructor-large \

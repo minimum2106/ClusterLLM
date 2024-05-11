@@ -88,8 +88,16 @@ def generate(args):
             cur_options = options[idx].tolist()
             # sample 2 from most probable clusters
             cluster1, cluster2 = random.sample(cur_options, 2)
-            choice1 = random.choice(class_member_inds[cluster1])
-            choice2 = random.choice(class_member_inds[cluster2])
+
+            if args.method == 'all_random':
+                choice1 = random.choice(class_member_inds[cluster1])
+                choice2 = random.choice(class_member_inds[cluster2])
+            else:
+                # CHANGE TO CHOOSE THE CENTROID OF 2 PROBABLE CLASSES AS 2 CHOICES
+                choice1 = cluster_centers[cluster1]
+                choice2 = cluster_centers[cluster2]
+
+            
             if (
                 (idx, choice1, choice2) not in triplets
                 and choice1 != idx
@@ -193,6 +201,7 @@ if __name__ == "__main__":
     parser.add_argument("--out_dir", default="links", type=str)
     parser.add_argument("--seed", type=int, default=100)
     parser.add_argument("--iter", type=int, default=0)
+    parser.add_argument("--method", type=str, default="all_random")
 
     args = parser.parse_args()
     generate(args)

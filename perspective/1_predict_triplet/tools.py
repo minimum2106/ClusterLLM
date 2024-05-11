@@ -1,6 +1,10 @@
 import time
 # import openai
 from transformers import AutoModel, AutoModelForCausalLM, AutoTokenizer
+from huggingface_hub import login
+
+
+# login(token="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")
 
 # Define a function that adds a delay to a Completion API call
 def delayed_completion(model, tokenizer, messages, delay_in_seconds: float = 1, max_trials: int = 1, **kwargs):
@@ -52,8 +56,9 @@ import os
 def get_model(model_name):
     if model_name not in ['e5-mistral-7b-instruct', 'gritlm-7b', 'gte-large', 'mistral_7b']:
         raise ValueError(f"{model_name} is not existed")
+    
+    local_model_dir = '/home/jupyter-t.hongquan/shared/models/' + model_name
 
-    local_model_dir = '/mnt/sdb/shared/models/' + model_name
     
     if model_name == "mistral_7b":
         return AutoModelForCausalLM.from_pretrained(local_model_dir), AutoTokenizer.from_pretrained(local_model_dir)

@@ -1,4 +1,4 @@
-for dataset in banking77
+dataset=$2
 do
     link_path=granularity/sampled_pair_results/${dataset}_embed=finetuned_s=small_k=1_multigran2-200_seed=100.json
     OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 python granularity/predict_pairs.py \

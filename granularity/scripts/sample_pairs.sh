@@ -1,16 +1,15 @@
 scale=small
 embed_method=finetuned
 d="67.0"
-dataset=banking77
+dataset=$2
 
-feat_path=../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 \
+feat_path=../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 
 python granularity/sample_pairs.py \
     --dataset $dataset \
     --data_path ../../datasets/${dataset}/${scale}.jsonl \
     --feat_path $feat_path \
     --scale $scale \
     --embed_method $embed_method \
-    --k $k \
     --out_dir granularity/sampled_pair_results \
     --min_clusters 2 \
     --max_clusters 200 \

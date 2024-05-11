@@ -128,11 +128,14 @@ class InstructorTrainer(Seq2SeqTrainer):
                 all_scores = torch.cat([all_scores, cur_score.unsqueeze(0)], dim=0)
 
         def custom_loss(scores, labels):
+            scores = scores.T[0]
             scores = torch.square(scores.repeat(2,1))
+            
             scores = scores * labels.T
+
             scores += 0.0000000000000000001
             sum_score = scores.sum(-1)
-
+            
             return sum_score[0] / sum_score[1]
         
 
@@ -435,6 +438,11 @@ def main():
 
     set_seed(training_args.seed)
     # with open(os.path.join(model_args.cache_dir, data_args.train_file), 'r') as f:
+    # print("================================================")
+    # print('granularity/converted_pair_results/banking77_embed=finetuned_s=small_k=1_multigran2-200_seed=100-mistral_7b-prompts_pair_exps_pair_v3-train.json')
+    # print(data_args.train_file)
+    # print("================================================")
+    
     with open(data_args.train_file, 'r') as f:
         train_examples_raw = json.load(f)
 
@@ -554,6 +562,8 @@ def main():
         pad_to_multiple_of=8 if training_args.fp16 else None,
     )
 
+    # change option safetensors to False to avoid shared memory problem
+    training_args.save_safetensors = False
     trainer = InstructorTrainer(
         model=model,
         args=training_args,

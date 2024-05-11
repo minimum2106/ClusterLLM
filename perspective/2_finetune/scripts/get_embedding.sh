@@ -1,14 +1,15 @@
 # ===== original embedding =====
 
-dataset=banking77
 scale=small
 d=67
 
 iter=$1
 epoch=$2
 method=$3
+dataset=$4
 
-if [[$1 -eq 0]]
+
+if [[ $iter -eq 0 ]]
 then    
     CUDA_VISIBLE_DEVICES=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 python perspective/2_finetune/get_embedding.py \
         --model_name hkunlp/instructor-large \
@@ -21,7 +22,7 @@ then
         --method $method \
         --measure
 else
-    checkpoint_path=perspective/2_finetune/checkpoints/finetune-pretrain-1024-gpt-noprior/instructor-large-${dataset}-d=${d}-epoch=${epoch}-iter=$[iter - 1] \
+    checkpoint_path=perspective/2_finetune/checkpoints/finetune-pretrain-1024-gpt-noprior/instructor-large-${dataset}-d=-epoch=${epoch}-iter=$[iter - 1] 
     CUDA_VISIBLE_DEVICES=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 python perspective/2_finetune/get_embedding.py \
         --model_name hkunlp/instructor-large \
         --scale $scale \
