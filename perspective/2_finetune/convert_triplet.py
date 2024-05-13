@@ -57,7 +57,8 @@ print(out_data[0])
 print(out_data[-10])
 
 output_path = os.path.join(args.output_path, args.pred_path.split("/")[-1].replace("-pred.json", "-train.json"))
-assert not os.path.exists(output_path)
+# assert not os.path.exists(output_path)
+
 print(output_path)
 with open(output_path, 'w') as f:
     json.dump(out_data, f)

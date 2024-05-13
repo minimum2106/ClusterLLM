@@ -38,19 +38,24 @@ do
             do 
                 # Step 1: Get embeddings from original embedding model
                 # if i == 0 --> run with the original embedding model 
-                # if i != 0 --> run with the latest finetuned embedding model   
+                # if i != 0 --> run with the latest finetuned embedding model 
+                echo "============================ EMBEDDINGS ============================"  
                 bash perspective/2_finetune/scripts/get_embedding.sh $i $epoch $method $dataset
     
                 # Step 2: Sample triplets
+                echo "============================ SAMPLE ============================"
                 bash granularity/scripts/sample_pairs.sh $i $dataset
     
                 # Step 3: Predict triplets
+                echo "============================ PREDICT ============================"
                 bash granularity/scripts/predict_pairs.sh $i $dataset
     
                 # Step 4: Convert triplets
+                echo "============================ CONVERT ============================"
                 bash granularity/scripts/convert_pairs.sh $i $dataset
     
                 # Step 5: 
+                echo "============================ FINETUNE ============================"
                 bash granularity/scripts/finetune.sh $i $epoch $dataset
             done
         else

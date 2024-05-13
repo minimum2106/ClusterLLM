@@ -20,7 +20,8 @@ then
         --iter $iter \
         --epoch $epoch \
         --method $method \
-        --measure
+        --measure \
+        --overwrite
 else
     checkpoint_path=perspective/2_finetune/checkpoints/finetune-pretrain-1024-gpt-noprior/instructor-large-${dataset}-d=-epoch=${epoch}-iter=$[iter - 1] 
     CUDA_VISIBLE_DEVICES=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 python perspective/2_finetune/get_embedding.py \

@@ -1,6 +1,7 @@
 iter=$1
 epoch=$2
 dataset=$3
+seed=100
 
 # ===== mistral-7b =====
 CUDA_VISIBLE_DEVICES=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 python perspective/2_finetune/finetune.py \

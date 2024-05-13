@@ -29,8 +29,6 @@ def generate(args):
     os.makedirs(args.out_dir, exist_ok=True)
     # save_path = f"{args.out_dir}/{args.dataset}_embed={args.embed_method}_s={args.scale}_m={args.max_query}_d={round(args.max_distance, 1)}{'_f=' + str(round(args.filter_first_prop, 2)) if args.filter_first_prop != 0 else ''}{'_l=' + str(round(args.large_ent_prop, 2)) if args.large_ent_prop != 0.2 else ''}{'_p=' + str(round(args.close_cluster_prop, 3)) if args.close_cluster_prop != 0.02 else ''}{'_sf' if args.shuffle_inds else ''}_choice_seed={args.seed}_iter={args.iter}.json"
     save_path = f"{args.out_dir}/{args.dataset}_embed={args.embed_method}_s={args.scale}_m={args.max_query}_choice_seed={args.seed}_iter={args.iter}.json"
-
-    print(save_path)
     random.seed(args.seed)
     np.random.seed(args.seed)
     data = load_data(args)

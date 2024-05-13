@@ -53,15 +53,7 @@ if os.path.exists(args.result_file) and not args.overwrite:
 
 else:
     model = INSTRUCTOR(args.model_name,cache_folder=args.cache_dir)
-    if args.checkpoint is not None:
-        # print("checkpoint")
-        # print(f"Loading from {args.checkpoint} ...")
-        # print("======================================")
-        # print(os.path.isdir('perspective/2_finetune/checkpoints/finetune-pretrain-1024-gpt-noprior/instructor-large-banking77-d=67-epoch=2-iter=0/'))
-        # print(os.path.isfile('perspective/2_finetune/checkpoints/finetune-pretrain-1024-gpt-noprior/instructor-large-banking77-d=67-epoch=2-iter=0/pytorch_model.bin'))
-        # print(os.path.isfile('perspective/2_finetune/checkpoints/finetune-pretrain-1024-gpt-noprior/instructor-large-banking77-d=-epoch=2-iter=0'))
-        # print("======================================")
-        
+    if args.checkpoint is not None:        
         state_dict = torch.load(os.path.join(args.checkpoint, 'pytorch_model.bin'))
         model.load_state_dict(state_dict)
         print("checkpoint done")

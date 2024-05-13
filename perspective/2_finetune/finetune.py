@@ -404,11 +404,6 @@ def main():
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
-    
-    
-    
-    
-
     data_args.output_dir = training_args.output_dir
     real_name_or_path = model_args.model_name_or_path
     data_args.model_name_or_path = model_args.model_name_or_path

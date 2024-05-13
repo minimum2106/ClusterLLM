@@ -7,7 +7,7 @@ iter=$1
 method=$2
 dataset=$3
 
-feat_path=../../datasets/${dataset}/${scale}_embeds_iter=$1.hdf5 \
+feat_path=../../datasets/${dataset}/${scale}_embeds_iter=${iter}.hdf5 perspective/1_predict_triplet/scripts/triplet_sampling.sh
 python perspective/1_predict_triplet/triplet_sampling.py \
     --data_path ../../datasets/${dataset}/${scale}.jsonl \
     --feat_path $feat_path \
