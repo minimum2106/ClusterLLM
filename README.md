@@ -4,13 +4,13 @@
 
 This is the official PyTorch implementation of paper [CLUSTERLLM: Large Language Models as a Guide for Text Clustering (EMNLP2023)](https://arxiv.org/abs/2305.14871).
 
-## Our Contributions
+## My works on this article
 
 Due to limited resources for accessing the OpenAI API, reproducing the results of the article was not feasible. Instead, the research was adapted to fit the available capabilities. The work was conducted on a server at Paris Cité University, equipped with a 32GB GPU.
 
-Given these technical constraints, the experiments focused on smaller open-source LLMs. We chose the Mistral-7B-v0.1 model, a pre-trained base model released in September 2023, which was competitive in performance, matching or surpassing larger models like Llama 2 13B. While Mistral-7B-v0.1 is not listed on the Massive Text Embedding Benchmark (MTEB) Leaderboard, which ranks models on various clustering tasks, it allowed us to conduct a preliminary evaluation of its clustering capabilities.
+Given these technical constraints, the experiments focused on smaller open-source LLMs. I chose the Mistral-7B-v0.1 model, a pre-trained base model released in September 2023, which was competitive in performance, matching or surpassing larger models like Llama 2 13B. While Mistral-7B-v0.1 is not listed on the Massive Text Embedding Benchmark (MTEB) Leaderboard, which ranks models on various clustering tasks, it allowed us to conduct a preliminary evaluation of its clustering capabilities.
 
-We focused on specific datasets for different clustering domains:
+I focused on specific datasets for different clustering domains:
 
 - Bank77 for intent discovery
 - GoEmo for emotion classification
