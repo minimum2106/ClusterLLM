@@ -4,7 +4,7 @@
 
 This is the official PyTorch implementation of paper [CLUSTERLLM: Large Language Models as a Guide for Text Clustering (EMNLP2023)](https://arxiv.org/abs/2305.14871).
 
-## My works on this article
+## ============================== My works on this article ==============================
 
 Due to limited resources for accessing the OpenAI API, reproducing the results of the article was not feasible. Instead, the research was adapted to fit the available capabilities. The work was conducted on a server at Paris Cité University, equipped with a 32GB GPU.
 
@@ -56,6 +56,8 @@ Using the centroids provides a more stable and representative reference for comp
 
 In this experiment, I did not observe any significant difference. Analyzing the results, I found that the outcomes were similar to those obtained with the original approach.
 
+
+## ============================== ORIGNIAL PAPER ========================================
 
 ## Install
 
@@ -168,7 +170,7 @@ bash scripts/predict_num_clusters.sh
 
 Details instructions see bash script.
 
-## OUR MODIFICATION
+## ================================= OUR MODIFICATION ===================================
 
 I have reduced the run for the whole pipeline into 2 bash scrips.
 
